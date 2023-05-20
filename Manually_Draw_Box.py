@@ -16,7 +16,6 @@ for image_file in image_files:
     image_path = os.path.join(folder_path, image_file)
     image = cv2.imread(image_path)
 
-    print('Please draw rectangles around the palm regions. Press enter when finished.')
     bboxes = []
     labels = []
 
@@ -27,15 +26,15 @@ for image_file in image_files:
     bboxes.append([x, y, w, h])
 
     # Prompt the user to enter a label for the palm region
-    label = input('Enter the label for the palm region: ')
+    label = "Left"
     labels.append(label)
     
-    annotations.append({'image': image_file, 'bboxes': bboxes, 'labels': labels})
+    annotations.append({'image_path': folder_path+'/'+image_file, 'bboxes': bboxes, 'labels': labels})
 
     # Create the annotation entry for the image
     annotation_element = ET.SubElement(annotation_root, 'annotation')
-    filename_element = ET.SubElement(annotation_element, 'filename')
-    filename_element.text = image_file
+    filename_element = ET.SubElement(annotation_element, 'image_path')
+    filename_element.text = folder_path+'/'+image_file
     
     # Iterate over the bounding boxes
     for bbox, label in zip(bboxes, labels):
@@ -65,9 +64,9 @@ xml_tree.write(xml_file_path)
 csv_file_path = os.path.join(folder_path, 'annotations.csv')
 with open(csv_file_path, 'w', newline='') as csv_file:
     writer = csv.writer(csv_file)
-    writer.writerow(['image', 'x', 'y', 'width', 'height', 'label'])
+    writer.writerow(['image_path', 'x', 'y', 'width', 'height', 'label'])
     for annotation in annotations:
-        image_file = annotation['image']
+        image_file = annotation['image_path']
         bboxes = annotation['bboxes']
         labels = annotation['labels']
         for bbox, label in zip(bboxes, labels):
