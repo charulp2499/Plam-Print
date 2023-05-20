@@ -17,11 +17,6 @@ for image_file in image_files:
     image_path = os.path.join(folder_path, image_file)
     image = cv2.imread(image_path)
 
-    # Display the image
-    cv2.imshow('Image', image)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-
     # Manually label the palm regions
     print('Please draw rectangles around the palm regions. Press enter when finished.')
     bboxes = []
