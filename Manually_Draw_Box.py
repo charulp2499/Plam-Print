@@ -3,36 +3,27 @@ import cv2
 import csv
 import xml.etree.ElementTree as ET
 
-
-# Folder path containing the images
 folder_path = 'E:/Projects/Palm Print Detection/1/L'
 
 # Get a list of image files in the folder
 image_files = [f for f in os.listdir(folder_path) if f.endswith('.jpg')]
-
 annotation_root = ET.Element('annotations')
-
-# List to store the annotations
 annotations = []
 
 # Iterate over the image files
 for image_file in image_files:
-    # Load the image
+    
     image_path = os.path.join(folder_path, image_file)
     image = cv2.imread(image_path)
 
-    # Manually label the palm regions
     print('Please draw rectangles around the palm regions. Press enter when finished.')
     bboxes = []
     labels = []
 
-    # Prompt the user to draw a rectangle
     rect = cv2.selectROI('Image', image)
 
-    # Get the rectangle coordinates
     x, y, w, h = rect
 
-    # Store the bounding box coordinates
     bboxes.append([x, y, w, h])
 
     # Prompt the user to enter a label for the palm region
@@ -46,7 +37,6 @@ for image_file in image_files:
     filename_element = ET.SubElement(annotation_element, 'filename')
     filename_element.text = image_file
     
-
     # Iterate over the bounding boxes
     for bbox, label in zip(bboxes, labels):
         xmin, ymin, width, height = bbox
