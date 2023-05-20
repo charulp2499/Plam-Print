@@ -22,26 +22,19 @@ for image_file in image_files:
     bboxes = []
     labels = []
 
-    while True:
-        # Prompt the user to draw a rectangle
-        rect = cv2.selectROI('Image', image)
+    # Prompt the user to draw a rectangle
+    rect = cv2.selectROI('Image', image)
 
-        # Get the rectangle coordinates
-        x, y, w, h = rect
+    # Get the rectangle coordinates
+    x, y, w, h = rect
 
-        # Store the bounding box coordinates
-        bboxes.append([x, y, w, h])
+    # Store the bounding box coordinates
+    bboxes.append([x, y, w, h])
 
-        # Prompt the user to enter a label for the palm region
-        label = input('Enter the label for the palm region: ')
-        labels.append(label)
-
-        # Ask the user if they want to draw another rectangle
-        answer = input('Do you want to draw another rectangle? (Y/N): ')
-        if answer.lower() == 'n':
-            break
-
-    # Add the annotations for the image to the list
+    # Prompt the user to enter a label for the palm region
+    label = input('Enter the label for the palm region: ')
+    labels.append(label)
+    
     annotations.append({'image': image_file, 'bboxes': bboxes, 'labels': labels})
 
 # Save the annotations in a CSV file
