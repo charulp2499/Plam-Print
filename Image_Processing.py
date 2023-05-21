@@ -22,7 +22,7 @@ def process_image(root_folder, output_folder):
                     kernel = np.array([[-1,-1,-1], [-1,9,-1], [-1,-1,-1]])
                     sharpened_image = cv2.filter2D(image, -1, kernel)
 
-                    # smoothed = cv2.medianBlur(sharpened_image, 5)
+                    # smoothed = cv2.GaussianBlur(sharpened_image, 0.2)
 
                     subfolder = os.path.basename(folder_path)
                     image_name = os.path.splitext(file)[0]
@@ -38,7 +38,7 @@ def process_image(root_folder, output_folder):
 # Define the paths
 
 root_folder = "E:/Projects/Palm Print Detection/Datasets/Database_Image_Resize"
-output_folder = "E:/Projects/Palm Print Detection/Preprocessed_Dataset"
+output_folder = "E:/Projects/Palm Print Detection/Smooth"
 
 process_image(root_folder, output_folder)
 
