@@ -3,7 +3,7 @@ import cv2
 import csv
 import xml.etree.ElementTree as ET
 
-folder_path = 'E:/Projects/Palm Print Detection/Preprocessed_Dataset/01/L'
+folder_path = 'E:/Projects/Palm Print Detection/Preprocessed_Dataset/25/R'
 
 # Get a list of image files in the folder
 image_files = [f for f in os.listdir(folder_path) if f.endswith('.jpg')]
@@ -26,7 +26,8 @@ for image_file in image_files:
     bboxes.append([x, y, w, h])
 
     # Prompt the user to enter a label for the palm region
-    label = "01_left"
+    # label = "25_left"
+    label = "25_right"
     labels.append(label)
     
     annotations.append({'image': image_file, 'bboxes': bboxes, 'labels': labels})
@@ -74,37 +75,3 @@ with open(csv_file_path, 'w', newline='') as csv_file:
             writer.writerow([image_file, x, y, w, h, label])
 
 print('Annotations saved in annotations csv and XML')
-
-
-def process_image(root_folder, output_folder):
-    for root, dirs, files in os.walk(root_folder):
-        for folder in dirs:
-            folder_path = os.path.join(root, folder)
-            output_subfolder = os.path.join(output_folder, os.path.relpath(folder_path, root_folder))
-
-            # Create the output subfolder
-            os.makedirs(output_subfolder, exist_ok=True)
-
-            # Iterate through files in the subfolder
-            for file in os.listdir(folder_path):
-                file_path = os.path.join(folder_path, file)
-                if file.endswith(".jpg"):
-                    
-                    image = cv2.imread(file_path)
-
-                    # Apply sharpening filter to the resized image
-                    kernel = np.array([[-1,-1,-1], [-1,9,-1], [-1,-1,-1]])
-                    sharpened_image = cv2.filter2D(image, -1, kernel)
-
-                    # smoothed = cv2.medianBlur(sharpened_image, 5)
-
-                    subfolder = os.path.basename(folder_path)
-                    image_name = os.path.splitext(file)[0]
-                    image_name = image_name.replace(".", "_")
-                    
-                    # output_file = os.path.join(output_subfolder, file)
-                    output_file = os.path.join(output_subfolder, f"{root[-1]}_{subfolder}_{image_name}.jpg")
-                    print(output_file)
-                    cv2.imwrite(output_file, sharpened_image)
-        
-    print("Image dataset preprocessing complete.")
