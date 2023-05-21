@@ -29,12 +29,12 @@ for image_file in image_files:
     label = "Left"
     labels.append(label)
     
-    annotations.append({'image_path': folder_path+'/'+image_file, 'bboxes': bboxes, 'labels': labels})
+    annotations.append({'image': image_file, 'bboxes': bboxes, 'labels': labels})
 
     # Create the annotation entry for the image
     annotation_element = ET.SubElement(annotation_root, 'annotation')
-    filename_element = ET.SubElement(annotation_element, 'image_path')
-    filename_element.text = folder_path+'/'+image_file
+    filename_element = ET.SubElement(annotation_element, 'image')
+    filename_element.text = image_file
     
     # Iterate over the bounding boxes
     for bbox, label in zip(bboxes, labels):
@@ -64,9 +64,9 @@ xml_tree.write(xml_file_path)
 csv_file_path = os.path.join(folder_path, 'annotations.csv')
 with open(csv_file_path, 'w', newline='') as csv_file:
     writer = csv.writer(csv_file)
-    writer.writerow(['image_path', 'x', 'y', 'width', 'height', 'label'])
+    writer.writerow(['image', 'x', 'y', 'width', 'height', 'label'])
     for annotation in annotations:
-        image_file = annotation['image_path']
+        image_file = annotation['image']
         bboxes = annotation['bboxes']
         labels = annotation['labels']
         for bbox, label in zip(bboxes, labels):
