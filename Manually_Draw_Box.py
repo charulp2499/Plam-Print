@@ -3,7 +3,7 @@ import cv2
 import csv
 import xml.etree.ElementTree as ET
 
-folder_path = 'E:/Projects/Palm Print Detection/Preprocessed_Dataset/25/R'
+folder_path = 'E:/Projects/Palm Print Detection/Preprocessed_Dataset/30/R'
 
 # Get a list of image files in the folder
 image_files = [f for f in os.listdir(folder_path) if f.endswith('.jpg')]
@@ -26,8 +26,8 @@ for image_file in image_files:
     bboxes.append([x, y, w, h])
 
     # Prompt the user to enter a label for the palm region
-    # label = "25_left"
-    label = "25_right"
+    # label = "30_left"
+    label = "30_right"
     labels.append(label)
     
     annotations.append({'image': image_file, 'bboxes': bboxes, 'labels': labels})
