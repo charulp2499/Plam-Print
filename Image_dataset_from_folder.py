@@ -2,6 +2,7 @@ import os
 import cv2
 import numpy as np
 
+
 def process_videos(root_folder, output_folder):
     for root, dirs, files in os.walk(root_folder):
         for folder in dirs:
@@ -36,12 +37,9 @@ def process_videos(root_folder, output_folder):
                             height = int(frame.shape[0] * scale_percent / 100)
                             resized_frame = cv2.resize(frame, (width, height))
                         
-                            # Apply sharpening filter to the resized frame
-                            kernel = np.array([[-1,-1,-1], [-1,9,-1], [-1,-1,-1]])
-                            sharpened_frame = cv2.filter2D(resized_frame, -1, kernel)
 
                             output_file = os.path.join(output_subfolder, f"{file}_{count}.jpg")
-                            cv2.imwrite(output_file, sharpened_frame)
+                            cv2.imwrite(output_file, resized_frame)
                             count += 1
                         
                         frame_number += 1
@@ -53,7 +51,7 @@ def process_videos(root_folder, output_folder):
 # Define the paths
 
 root_folder = "E:/Projects/Palm Print Detection/Database/"
-output_folder = "E:/Projects/Palm Print Detection/Preprocessed_Dataset"
+output_folder = "E:/Projects/Palm Print Detection/Database_Image_Resize"
 
 process_videos(root_folder, output_folder)
 
